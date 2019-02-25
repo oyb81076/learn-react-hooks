@@ -1,10 +1,7 @@
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
-import { fromEvent } from "rxjs/internal/observable/fromEvent"
-import { merge } from "rxjs/internal/observable/merge"
-import { debounceTime } from "rxjs/internal/operators/debounceTime"
-import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChanged"
-import { pluck } from "rxjs/internal/operators/pluck"
+import { fromEvent, merge } from "rxjs"
+import { debounceTime, distinctUntilChanged, pluck } from "rxjs/operators"
 
 export default function RxEvent() {
   const [value, setValue] = useState("")

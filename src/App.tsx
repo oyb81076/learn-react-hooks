@@ -5,8 +5,9 @@ import { HookMain, HookNav } from './hooks';
 import { LifeCycleMain, LifeCycleNav } from './lifecycle';
 import logo from './logo.svg';
 import { RxMain, RxNav } from './rxjs';
+import { RxjsHooksMain, RxjsHooksNav } from './rxjs-hooks';
 
-class App extends React.Component {
+export default class App extends React.Component {
   public render() {
     return (
       <div className="App">
@@ -18,12 +19,14 @@ class App extends React.Component {
           <p><HookNav path="/hooks" /></p>
           <p><LifeCycleNav /></p>
           <p><RxNav path="/rxjs" /></p>
+          <p><RxjsHooksNav path="/rxjs-hooks" /></p>
         </nav>
         <Switch>
           <Route path="/hooks" component={HookMain} />
           <Route path="/lifecycle" component={LifeCycleMain} />
           <Route path="/rxjs" component={RxMain} />
-          <Redirect to="/hooks/useState" />
+          <Route path="/rxjs-hooks" component={RxjsHooksMain} />
+          <Redirect to="/hooks" />
         </Switch>
         <p className="App-intro">
           To get started, edit <code>src/App.tsx</code> and save to reload.
@@ -32,5 +35,3 @@ class App extends React.Component {
     );
   }
 }
-
-export default App;
