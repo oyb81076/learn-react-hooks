@@ -12,19 +12,23 @@ body, html {
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+  height: 30px;
+  vertical-align: middle;
 }
 
 .App-header {
   background-color: #222;
-  height: 150px;
-  padding: 20px;
+  height: 30px;
+  padding: 10px;
   color: white;
-  text-align: center;
+  text-align: left;
 }
 
 .App-title {
-  font-size: 1.5em;
+  display: inline-block;
+  padding-left: 10px;
+  font-size: 1.2em;
+  vertical-align: middle;
 }
 
 @keyframes App-logo-spin {
@@ -37,13 +41,15 @@ body, html {
   flex: 1;
 }
 .nav {
+  padding-top: 5px;
   width: 250px;
   text-align: left;
   background-color: #fafafa;
 }
 .nav-title {
   padding-left: .5em;
-  font-size: 1.4em;
+  font-size: 1.2em;
+  color: #999;
 }
 nav > div {
   margin-bottom: 1em;
@@ -55,9 +61,9 @@ nav > div {
 }
 .link {
   padding-left: 2em;
-  color: #999;
   text-decoration: none;
   display: block;
+  color: #666;
 }
 .link.active {
   color: #3142d0;

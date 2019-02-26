@@ -23,7 +23,6 @@ export function HookNav({ path }: { path: string }) {
       <NavLink className="link" to={`${path}/useRef`} >useRef</NavLink>
       <NavLink className="link" to={`${path}/useDebugValue`} >useDebugValue</NavLink>
       <NavLink className="link" to={`${path}/useImperativeHandle`} >useImperativeHandle</NavLink>
-      <NavLink className="link" to={`${path}/useDebugValue`} >useDebugValue</NavLink>
     </>
   )
 }
