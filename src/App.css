@@ -1,5 +1,13 @@
+body, html {
+  padding: 0;
+  margin: 0;
+}
+
 .App {
-  text-align: center;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  flex-flow: column;
 }
 
 .App-logo {
@@ -12,14 +20,11 @@
   height: 150px;
   padding: 20px;
   color: white;
+  text-align: center;
 }
 
 .App-title {
   font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
 }
 
 @keyframes App-logo-spin {
@@ -27,11 +32,33 @@
   to { transform: rotate(360deg); }
 }
 
+.section {
+  display: flex;
+  flex: 1;
+}
+.nav {
+  width: 250px;
+  text-align: left;
+  background-color: #fafafa;
+}
+.nav-title {
+  padding-left: .5em;
+  font-size: 1.4em;
+}
+nav > div {
+  margin-bottom: 1em;
+}
+.main {
+  flex: 1;
+  padding: 20px;
+  text-align: left;
+}
 .link {
-  margin: 0 1em;
+  padding-left: 2em;
   color: #999;
   text-decoration: none;
+  display: block;
 }
 .link.active {
-  color: #333;
+  color: #3142d0;
 }

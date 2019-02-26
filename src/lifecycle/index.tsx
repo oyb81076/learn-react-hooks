@@ -1,19 +1,22 @@
 import * as React from 'react';
-import { NavLink, Redirect, Route, Switch } from "react-router-dom"
+import { NavLink, Redirect, Route, RouteComponentProps, Switch } from "react-router-dom"
 import ComponentDidMount from './ComponentDidMount';
-export function LifeCycleNav() {
+import Memo from './Memo';
+export function LifeCycleNav({ path }: { path: string }) {
   return (
     <>
-      <NavLink className="link" to="/lifecycle/componentDidMount" >ComponentDidMount</NavLink>
+      <NavLink className="link" to={`${path}/componentDidMount`} >ComponentDidMount</NavLink>
+      <NavLink className="link" to={`${path}/memo`} >Memo</NavLink>
     </>
   )
 }
 
-export function LifeCycleMain() {
+export function LifeCycleMain({ match: { path } }: RouteComponentProps) {
   return (
     <Switch>
-      <Route path="/lifecycle/componentDidMount" component={ComponentDidMount} />
-      <Redirect to="/lifecycle/componentDidMount" />
+      <Route path={`${path}/componentDidMount`} component={ComponentDidMount} />
+      <Route path={`${path}/memo`} component={Memo} />
+      <Redirect to={`${path}/componentDidMount`} />
     </Switch>
   )
 }
