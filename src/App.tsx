@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Redirect, Route, Switch } from "react-router-dom"
 import './App.css';
+import { CustomHooksMain, CustomHooksNav } from './custom-hooks';
 import { HookMain, HookNav } from './hooks';
 import { LifeCycleMain, LifeCycleNav } from './lifecycle';
 import logo from './logo.svg';
@@ -26,6 +27,10 @@ export default class App extends React.Component {
               <LifeCycleNav path="/lifecycle" />
             </div>
             <div>
+              <div className="nav-title">Custom Hooks</div>
+              <CustomHooksNav path="/custom-hooks" />
+            </div>
+            <div>
               <div className="nav-title">Rxjs</div>
               <RxNav path="/rxjs" />
             </div>
@@ -37,6 +42,7 @@ export default class App extends React.Component {
           <main className="main">
             <Switch>
               <Route path="/hooks" component={HookMain} />
+              <Route path="/custom-hooks" component={CustomHooksMain} />
               <Route path="/lifecycle" component={LifeCycleMain} />
               <Route path="/rxjs" component={RxMain} />
               <Route path="/rxjs-hooks" component={RxjsHooksMain} />

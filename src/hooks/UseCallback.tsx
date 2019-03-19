@@ -1,19 +1,21 @@
 import * as React from "react"
-import { useCallback, useState } from "react"
+import { ChangeEvent, useCallback, useState } from "react"
 let func: any = null;
 export default function UseCallback() {
-  const [count1, setCount1] = useState(0)
-  const [count2, setCount2] = useState(0)
-  const incr1 = useCallback(() => {
-    setCount1(count1 + 1)
-  }, [count1])
-  const diff = incr1 !== func;
-  func = incr1
+  const [value, setValue] = useState("")
+  const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  }, [setValue]);
+  const diff = func !== null && func !== onChange;
+  func = onChange;
   return (
     <div>
-      <div>incr1 changed: {diff ? "true" : "false"}</div>
-      <div>{count1} <button onClick={incr1}>incr</button></div>
-      <div>{count2} <button onClick={() => setCount2(count2 + 1)}>incr</button></div>
+      <p>使用 useCallback 接近 useMemo</p>
+      <p>useCallback(someFunc, [])</p>
+      <p>useMemo(()=> someFunc, [])</p>
+      <p>的效果是相同</p>
+      <input value={value} onChange={onChange} />
+      <div>is function onChange changed: {String(diff)}</div>
     </div>
   )
 }
