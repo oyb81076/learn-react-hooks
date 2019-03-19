@@ -7,6 +7,7 @@ import { LifeCycleMain, LifeCycleNav } from './lifecycle';
 import logo from './logo.svg';
 import { RxMain, RxNav } from './rxjs';
 import { RxjsHooksMain, RxjsHooksNav } from './rxjs-hooks';
+import { TipsMain, TipsNav } from './tips';
 
 export default class App extends React.Component {
   public render() {
@@ -31,6 +32,10 @@ export default class App extends React.Component {
               <CustomHooksNav path="/custom-hooks" />
             </div>
             <div>
+              <div className="nav-title">Tips</div>
+              <TipsNav path="/tips" />
+            </div>
+            <div>
               <div className="nav-title">Rxjs</div>
               <RxNav path="/rxjs" />
             </div>
@@ -44,6 +49,7 @@ export default class App extends React.Component {
               <Route path="/hooks" component={HookMain} />
               <Route path="/custom-hooks" component={CustomHooksMain} />
               <Route path="/lifecycle" component={LifeCycleMain} />
+              <Route path="/tips" component={TipsMain} />
               <Route path="/rxjs" component={RxMain} />
               <Route path="/rxjs-hooks" component={RxjsHooksMain} />
               <Redirect to="/hooks" />
