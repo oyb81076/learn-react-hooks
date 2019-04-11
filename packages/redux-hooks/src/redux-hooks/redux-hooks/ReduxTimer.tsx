@@ -4,12 +4,10 @@ import { RenderDisplay } from '../RenderDisplay';
 import { ReduxState } from '../store/reducers';
 import { refreshTimerAction } from '../store/timerReducer';
 const mapState = (state: ReduxState) => state.timer;
-const mapDispatch = (dispatch: any) => ({
-  refresh() { dispatch(refreshTimerAction()) }
-});
+const mapDispatch = (dispatch: any) => dispatch(refreshTimerAction());
 export function ReduxTimer() {
   const timer = useReduxState(mapState);
-  const { refresh } = useReduxAction(mapDispatch);
+  const refresh = useReduxAction(mapDispatch);
   return (
     <div style={{ marginBottom: 20 }}>
       <RenderDisplay name="ReduxTimer" />
