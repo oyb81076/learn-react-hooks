@@ -6,8 +6,8 @@ import { ReduxState } from '../store/reducers';
 function mapCounterState(state: ReduxState) { return state.counter; }
 function mapCounterAction(dispatch: any) {
   return {
-    incr() { dispatch(decrAction()) },
-    decr() { dispatch(incrAction()) },
+    incr() { dispatch(incrAction()) },
+    decr() { dispatch(decrAction()) },
     setCounterFromTimer() { dispatch(setCounterFromTimerAction()) }
   }
 }

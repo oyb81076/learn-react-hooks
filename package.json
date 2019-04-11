@@ -1,10 +1,11 @@
 {
   "name": "learn-react-hooks",
   "version": "1.0.0",
-  "main": "index.js",
   "repository": "git@github.com:oyb81076/learn-react-hooks.git",
   "author": "欧阳斌 <ouyangbin81076@gmail.com>",
   "license": "MIT",
   "private": true,
-  "workspaces": ["packages/*"]
+  "workspaces": [
+    "packages/*"
+  ]
 }
