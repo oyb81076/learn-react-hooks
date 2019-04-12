@@ -35,6 +35,16 @@ export function useDispatch() {
 }
 ```
 # 基本使用
+```tsx
+import { createStore } from "redux";
+import * as React from "react";
+import { render } from "react-dom";
+const store = createStore(....)
+render(
+  <ReduxStoreContext.Provider value={store}><App/></ReduxStoreContext.Provider>,
+  document.getElementById("root"),
+);
+```
 ## useMapState
 ```tsx
 const mapState = (state) => state.timer;
