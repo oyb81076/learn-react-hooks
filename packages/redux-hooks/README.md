@@ -89,7 +89,7 @@ function View(){
 }
 ```
 
-## reselect
+# reselect
 在 一般的库实现中, 采用的是 shadowEqual 来比较 mapState 结果是否发生改变
 在这个这个hooks中, 放弃用 shadowEqual 来比较 前后的变化, 直接暴力使用 prevValue === nextValue 来比叫前后是否有变化
 所以使用reselect作为 memorize 使用

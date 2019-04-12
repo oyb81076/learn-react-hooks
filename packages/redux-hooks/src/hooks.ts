@@ -1,17 +1,25 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { Action, AnyAction, Dispatch, Store } from 'redux';
-export const ReduxStoreContext = createContext<Store>(null as any);
-
-export function useMapState<T, S = any>(mapState: (state: S) => T): T {
+import { Action, ActionCreatorsMapObject, AnyAction, bindActionCreators, Dispatch, Store } from 'redux';
+export const ReduxStoreContext = createContext<Store>({
+  dispatch(){ throw new Error("<ReduxStoreContext.Provider> is required") },
+  getState(){ throw new Error("<ReduxStoreContext.Provider> is required") },
+  replaceReducer(){ throw new Error("<ReduxStoreContext.Provider> is required") },
+  subscribe(){ throw new Error("<ReduxStoreContext.Provider> is required") }
+});
+export function useMapState<T, S = any>(
+  mapState: (state: S) => T,
+  isEquals?: (a: T, b: T) => boolean,
+): T {
   const store = useContext(ReduxStoreContext);
-  const [value, setValue] = useState(() => mapState(store.getState()));
+  const [state, setState] = useState(() => mapState(store.getState()));
   const initMapState = useRef(mapState);
   useEffect(() => {
-    let prev = value;
+    let prevState = state;
+    const equals = isEquals || strictEquals;
     function subscription() {
-      const next = mapState(store.getState());
-      if (next !== prev) {
-        setValue(prev = next);
+      const nextState = mapState(store.getState());
+      if (!equals(nextState, prevState)) {
+        setState(prevState = nextState);
       }
     }
     if (initMapState.current !== mapState) {
@@ -19,13 +27,20 @@ export function useMapState<T, S = any>(mapState: (state: S) => T): T {
       subscription();
     }
     return store.subscribe(subscription);
-  }, [mapState]);
-  return value;
+  }, [mapState, isEquals]);
+  return state;
 }
+
+function strictEquals<T>(a: T, b: T) { return a === b; }
 
 export function useMapDispatch<T, A extends Action = AnyAction>(mapDispatch: ((dispatch: Dispatch<A>) => T)) {
   const store = useContext(ReduxStoreContext);
   return useMemo(() => mapDispatch(store.dispatch), [store.dispatch, mapDispatch]);
+}
+
+export function useMapAction<T extends ActionCreatorsMapObject>(mapAction: T): T {
+  const store = useContext(ReduxStoreContext);
+  return useMemo(() => bindActionCreators(mapAction, store.dispatch), [mapAction]);
 }
 
 export function useDispatch() {
