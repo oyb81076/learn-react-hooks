@@ -1,5 +1,3 @@
-# 不使用 shadowEqual 来进行对比, 而采用 reselect 来帮助
-
 # hooks.ts 源码
 ```ts
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
