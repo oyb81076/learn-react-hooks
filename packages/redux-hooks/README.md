@@ -1,102 +1,119 @@
-# hooks.ts 
+# 不使用 shadowEqual 来进行对比, 而采用 reselect 来帮助
+
+# hooks.ts 源码
 ```ts
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Action, AnyAction, Dispatch, Store } from 'redux';
 export const ReduxStoreContext = createContext<Store>(null as any);
-export function useReduxState<T, S = any>(mapState: (state: S) => T): T {
+
+export function useMapState<T, S = any>(mapState: (state: S) => T): T {
   const store = useContext(ReduxStoreContext);
   const [value, setValue] = useState(() => mapState(store.getState()));
+  const initMapState = useRef(mapState);
   useEffect(() => {
     let prev = value;
-    return store.subscribe(() => {
+    function subscription() {
       const next = mapState(store.getState());
       if (next !== prev) {
         setValue(prev = next);
       }
-    });
-  }, []);
+    }
+    if (initMapState.current !== mapState) {
+      initMapState.current = mapState;
+      subscription();
+    }
+    return store.subscribe(subscription);
+  }, [mapState]);
   return value;
 }
 
-export function useReduxAction<T, A extends Action = AnyAction>(mapDispatch: ((dispatch: Dispatch<A>) => T)) {
+export function useMapDispatch<T, A extends Action = AnyAction>(mapDispatch: ((dispatch: Dispatch<A>) => T)) {
   const store = useContext(ReduxStoreContext);
   return useMemo(() => mapDispatch(store.dispatch), [store.dispatch, mapDispatch]);
 }
 
-export function useReduxDispatch() {
+export function useDispatch() {
   return useContext(ReduxStoreContext).dispatch;
 }
 ```
 # 基本使用
+## useMapState
 ```tsx
-import * as React from "react"
-import { useReduxAction, useReduxDispatch, useReduxState } from '../hooks';
-import { refreshTimerAction } from '../store/timerReducer';
-const mapState = (state: any) => state.timer;
-const mapDispatch = (dispatch: any) => dispatch(refreshTimerAction());
-export function ReduxTimer1() {
-  const timer = useReduxState(mapState);
-  // useDispatchMap
-  const refresh = useReduxAction(mapDispatch);
+const mapState = (state) => state.timer;
+function ReduxTimer() {
+  const timer = useMapState(mapState);
   return (
     <div>
       <div>timer: {timer}</div>
-      <button onClick={refresh}>refresh</button>
-    </div>
-  )
-}
-export function ReduxTimer2() {
-  const timer = useReduxState(mapState);
-  // use dispatch
-  const dispatch = useReduxDispatch();
-  const refresh = React.useCallback(()=> dispatch(refreshTimerAction()),[]);
-  return (
-    <div>
-      <div>timer: {timer}</div>
-      <button onClick={refresh}>refresh</button>
     </div>
   )
 }
 ```
-# useReduxState 推荐搭配 reselect 一起使用
+## useMapDispatch
 ```tsx
-
-const todosSelector = (state: ReduxState) => state.todo.todos;
-const filterStateSelector = (state: ReduxState) => state.todo.filterState;
-const filterNameSelector = (state: ReduxState) => state.todo.filterName;
-
-const filterTodoListSelector = createSelector(
-  [todosSelector, filterNameSelector, filterStateSelector],
-  (todos, filterName, state) => {
-    switch (state) {
-      case FilterState.ALL:
-        break;
-      case FilterState.ACTIVE:
-        todos = todos.filter(x => !x.completed)
-        break;
-      case FilterState.COMPLETED:
-        todos = todos.filter(x => x.completed)
-        break;
-    }
-    if (!filterName) { return todos; }
-    return todos.filter(x => x.name.indexOf(filterName) !== -1)
-  }
-)
-
-const mapState = createStructuredSelector({
-  list: filterTodoListSelector,
-  name: filterNameSelector,
-  state: filterStateSelector,
-})
-
-export function FilterTodoList() {
-  const { state, name, list } = useReduxState(mapState);
-  return (
-    <div style={{ marginBottom: 20 }}>
-      <RenderDisplay name="FilterStateTodoList" />
-      <div>state: {FilterState[state]}, name: {name}</div>
-      <TodoItemList data={list}/>
-    </div>
-  );
+const mapDispatch = (dispatch)=> dispatch(incr());
+function View(){
+  const onClick = useMapDispatch(mapDispatch);
+  return <button onClick={onClick}>incr</button>
 }
+```
+```tsx
+const mapDispatch = (dispatch)=> ({
+  incr: ()=> dispatch(incr()),
+  decr: ()=> dispatch(decr()),
+ };
+function View(){
+  const actions = useMapDispatch(mapDispatch);
+  return (
+    <>
+      <button onClick={actions.incr}>incr</button>
+      <button onClick={actions.decr}>decr</button>
+    </>
+  )
+}
+```
+## useMapDispatch
+```tsx
+function View(){
+  const dispatch = useDispatch();
+  const onClick = useCallback(()=> { dispatch(incr()) }, [])
+  return <button onClick={onClick}>incr</button>
+}
+```
+
+## reselect
+在 一般的库实现中, 采用的是 shadowEqual 来比较 mapState 结果是否发生改变
+在这个这个hooks中, 放弃用 shadowEqual 来比较 前后的变化, 直接暴力使用 prevValue === nextValue 来比叫前后是否有变化
+所以使用reselect作为 memorize 使用
+### todoList 的例子
+```tsx
+const listSelector = (state)=>  state.todo.data;
+const isActiveSelector = (state) => state.todo.isActive;
+const filterListSelector = createSelector(
+  [listSelector, isActiveSelector],
+  ([list, isActive])=> list.filter(x=> x.isActive === isActive),
+);
+const mapState = reselect.createStructuredSelector({
+  isActive: isActiveSelector,
+  list: isActiveSelector,
+})
+function View(){
+  const { isActive, list } = useMapState(mapState)
+  // ...
+}
+```
+### 调用参数的例子
+```tsx
+const listSelector = (state)=>  state.todo.data;
+function View({ isActive }){
+  const mapState = useMemo(()=> {
+    return createSelector(
+      [listSelector],
+      (list)=> list.filter(x=> x.isActive === isActive),
+    )
+  }, [isActive]);
+  const list = useMapState(mapState);
+  // ....
+}
+
 ```

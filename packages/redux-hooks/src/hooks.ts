@@ -1,26 +1,33 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Action, AnyAction, Dispatch, Store } from 'redux';
 export const ReduxStoreContext = createContext<Store>(null as any);
-export function useReduxState<T, S = any>(mapState: (state: S) => T): T {
+
+export function useMapState<T, S = any>(mapState: (state: S) => T): T {
   const store = useContext(ReduxStoreContext);
   const [value, setValue] = useState(() => mapState(store.getState()));
+  const initMapState = useRef(mapState);
   useEffect(() => {
     let prev = value;
-    return store.subscribe(() => {
+    function subscription() {
       const next = mapState(store.getState());
       if (next !== prev) {
         setValue(prev = next);
       }
-    });
-  }, []);
+    }
+    if (initMapState.current !== mapState) {
+      initMapState.current = mapState;
+      subscription();
+    }
+    return store.subscribe(subscription);
+  }, [mapState]);
   return value;
 }
 
-export function useReduxAction<T, A extends Action = AnyAction>(mapDispatch: ((dispatch: Dispatch<A>) => T)) {
+export function useMapDispatch<T, A extends Action = AnyAction>(mapDispatch: ((dispatch: Dispatch<A>) => T)) {
   const store = useContext(ReduxStoreContext);
   return useMemo(() => mapDispatch(store.dispatch), [store.dispatch, mapDispatch]);
 }
 
-export function useReduxDispatch() {
+export function useDispatch() {
   return useContext(ReduxStoreContext).dispatch;
 }

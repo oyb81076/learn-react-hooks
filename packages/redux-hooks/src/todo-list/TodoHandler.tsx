@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useReduxAction, useReduxState } from '../hooks';
+import { useMapDispatch, useMapState } from '../hooks';
 import { filterNameSelector, filterStateSelector } from './selector';
 import { FilterState, updateTodoFilterName, updateTodoFilterState } from './todoReducer';
 function mapInputChange(dispatch: any) {
@@ -8,8 +8,8 @@ function mapInputChange(dispatch: any) {
   }
 }
 function FilterNameInput() {
-  const value = useReduxState(filterNameSelector);
-  const onChange = useReduxAction(mapInputChange);
+  const value = useMapState(filterNameSelector);
+  const onChange = useMapDispatch(mapInputChange);
   return <input value={value} onChange={onChange} />
 }
 function mapSelectChange(dispatch: any) {
@@ -18,8 +18,8 @@ function mapSelectChange(dispatch: any) {
   }
 }
 function FilterStateSelect() {
-  const value = useReduxState(filterStateSelector);
-  const onChange = useReduxAction(mapSelectChange);
+  const value = useMapState(filterStateSelector);
+  const onChange = useMapDispatch(mapSelectChange);
   return (
     <select value={value} onChange={onChange}>
       <option value={FilterState.ALL}>ALL</option>

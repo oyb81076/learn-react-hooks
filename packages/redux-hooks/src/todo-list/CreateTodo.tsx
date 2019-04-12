@@ -1,11 +1,11 @@
 import * as React from "react";
-import { useReduxAction } from '../hooks';
+import { useMapDispatch } from '../hooks';
 import { addTodo } from './todoReducer';
 export function CreateTodo() {
   const [value, setValue] = React.useState("")
   const ref = React.useRef(value);
   ref.current = value;
-  const { add } = useReduxAction(mapDispatch);
+  const { add } = useMapDispatch(mapDispatch);
   const onChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   }, []);

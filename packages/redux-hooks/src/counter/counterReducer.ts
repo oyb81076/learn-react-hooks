@@ -1,5 +1,4 @@
-import { ThunkAction } from "redux-thunk";
-import { ReduxAction, ReduxState } from './reducers';
+import { ReduxThunkAction } from '../store/reducers';
 // counter reducer
 export type CounterAction = { type: "incr" | "decr" } | { type: "set", value: number };
 export function counterReducer(state = 0, action: CounterAction): number {
@@ -13,9 +12,8 @@ export function counterReducer(state = 0, action: CounterAction): number {
 // counter action
 export function incrAction(): CounterAction { return { type: "incr" } }
 export function decrAction(): CounterAction { return { type: "decr" } }
-export function setCounterFromTimerAction(): ThunkAction<any, ReduxState, any, ReduxAction> {
+export function addAction(value: number): ReduxThunkAction {
   return (dispatch, getState) => {
-    const { timer } = getState();
-    dispatch({ type: "set", value: timer })
+    dispatch({ type: "set", value: getState().counter + value });
   }
 }

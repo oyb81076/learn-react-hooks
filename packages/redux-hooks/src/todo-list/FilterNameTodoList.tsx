@@ -1,7 +1,7 @@
 import * as React from "react";
 import { createSelector } from "reselect";
-import { useReduxState } from '../hooks';
-import { RenderDisplay } from '../RenderDisplay';
+import { RenderDisplay } from '../components/RenderDisplay';
+import { useMapState } from '../hooks';
 import { filterNameSelector, filterNameTodoListSelector } from './selector';
 import { TodoItemList } from './TodoItem';
 const mapState = createSelector([filterNameSelector, filterNameTodoListSelector], (name, list) => {
@@ -9,12 +9,12 @@ const mapState = createSelector([filterNameSelector, filterNameTodoListSelector]
 })
 
 export function FilterNameTodoList() {
-  const { name, list } = useReduxState(mapState);
+  const { name, list } = useMapState(mapState);
   return (
-    <div style={{ marginBottom: 20 }}>
+    <>
       <RenderDisplay name="FilterNameTodoList" />
       <div>name: {name}</div>
       <TodoItemList data={list}/>
-    </div>
+    </>
   );
 }
