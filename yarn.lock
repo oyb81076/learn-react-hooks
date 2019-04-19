@@ -94,6 +94,13 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
+"@types/redux-batched-subscribe@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.npmjs.org/@types/redux-batched-subscribe/-/redux-batched-subscribe-0.1.4.tgz#852cff7db7fa2ea4ce574b8c908ca9922e0b766a"
+  integrity sha512-pm6ZugZ1PZUjTCGtiiAWhGkmLVasmtTH2wK9lkKIWmbprg8kpHy0ccNgwnlfGGGNDmjg9e+itQHm7LyfsuhecQ==
+  dependencies:
+    redux "^4.0.0"
+
 "@types/redux-devtools-extension@^2.13.2":
   version "2.13.2"
   resolved "http://registry.npm.taobao.org/@types/redux-devtools-extension/download/@types/redux-devtools-extension-2.13.2.tgz#b2e09a8c163b2b0f5072e6a5ac41474000df2111"
@@ -6947,6 +6954,16 @@ reduce-function-call@^1.0.1:
   dependencies:
     balanced-match "^0.4.2"
 
+redux-batch-action@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/redux-batch-action/-/redux-batch-action-1.0.2.tgz#af8a67fbf44413706ac68f951a43f85d878ea412"
+  integrity sha512-XgBVUl8uFYsSQluZCNQOXSVRwBHOrDryrFy/fVS/nDQpBDupObV2LLFpnpVRV5sNDJI5m12Ypxe37S8WOIeIGQ==
+
+redux-batched-subscribe@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.npmjs.org/redux-batched-subscribe/-/redux-batched-subscribe-0.1.6.tgz#de928602708df7198b4d0c98c7119df993780d59"
+  integrity sha1-3pKGAnCN9xmLTQyYxxGd+ZN4DVk=
+
 redux-devtools-extension@*, redux-devtools-extension@^2.13.8:
   version "2.13.8"
   resolved "http://registry.npm.taobao.org/redux-devtools-extension/download/redux-devtools-extension-2.13.8.tgz#37b982688626e5e4993ff87220c9bbb7cd2d96e1"
@@ -6957,10 +6974,10 @@ redux-thunk@*, redux-thunk@^2.3.0:
   resolved "http://registry.npm.taobao.org/redux-thunk/download/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
   integrity sha1-UcLBmhhe1Rh6qpotCLZm0NZGdiI=
 
-redux@*, redux@^4.0.1:
+redux@*, redux@^4.0.0, redux@^4.0.1:
   version "4.0.1"
-  resolved "http://registry.npm.taobao.org/redux/download/redux-4.0.1.tgz#436cae6cc40fbe4727689d7c8fae44808f1bfef5"
-  integrity sha1-Q2yubMQPvkcnaJ18j65EgI8b/vU=
+  resolved "https://registry.npmjs.org/redux/-/redux-4.0.1.tgz#436cae6cc40fbe4727689d7c8fae44808f1bfef5"
+  integrity sha512-R7bAtSkk7nY6O/OYMVR9RiBI+XghjF9rlbl5806HJbQph0LJVHZrU5oaO4q70eUKiqMRqm4y07KLTlMZ2BlVmg==
   dependencies:
     loose-envify "^1.4.0"
     symbol-observable "^1.2.0"

@@ -16,15 +16,15 @@ export function useMapState<T, S = any>(
   useEffect(() => {
     let prevState = state;
     const equals = isEquals || strictEquals;
+    if (initMapState.current !== mapState) {
+      initMapState.current = mapState;
+      subscription();
+    }
     function subscription() {
       const nextState = mapState(store.getState());
       if (!equals(nextState, prevState)) {
         setState(prevState = nextState);
       }
-    }
-    if (initMapState.current !== mapState) {
-      initMapState.current = mapState;
-      subscription();
     }
     return store.subscribe(subscription);
   }, [mapState, isEquals]);

@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { Fragment, StrictMode, useCallback, useState } from "react"
+import { Batch } from './batch';
 import { Counter } from './counter';
 import { MapState } from './mapState';
+import { MixContextHooks } from './mix-context-hooks';
 import { ThunkDispatch } from './thunk-dispatch';
 import { TodoList } from './todo-list';
 import { Values } from "./values"
@@ -26,6 +28,12 @@ export default function App() {
         </div>
         <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
           <div style={{ flex: 1 }}>
+            <h1>Batch</h1>
+            <Batch />
+          </div>
+        </div>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+          <div style={{ flex: 1 }}>
             <h1>Counter</h1>
             <Counter />
           </div>
@@ -41,6 +49,11 @@ export default function App() {
             <h1>Map State</h1>
             <MapState />
           </div>
+          <div style={{ flex: 1 }}>
+            <h1>MixContextHooks</h1>
+            <MixContextHooks/>
+          </div>
+         
         </div>
       </div>
     </Root>

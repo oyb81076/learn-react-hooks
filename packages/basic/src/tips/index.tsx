@@ -7,6 +7,7 @@ import { Cycle } from './Cycle';
 import { Memo, NoneMemo } from "./Memo";
 import { RefRender } from './RefRender';
 import { RenderSequence } from './RenderSequence';
+import ReturnBeforeHooks from './ReturnBeforeHooks';
 export function TipsNav({ path }: { path: string }) {
   return (
     <>
@@ -18,6 +19,7 @@ export function TipsNav({ path }: { path: string }) {
       <NavLink className="link" to={`${path}/actions-render`} >Actions Render</NavLink>
       <NavLink className="link" to={`${path}/advancedUseReducer`} >Advanced Use Render</NavLink>
       <NavLink className="link" to={`${path}/cycle`} >Cycle</NavLink>
+      <NavLink className="link" to={`${path}/returnBeforeHooks`} >Return Before Hooks</NavLink>
     </>
   )
 }
@@ -32,6 +34,7 @@ export function TipsMain({ match: { path } }: RouteComponentProps) {
       <Route path={`${path}/actions-render`} component={ActionsRender} />
       <Route path={`${path}/advancedUseReducer`} component={AdvancedUseReducer} />
       <Route path={`${path}/cycle`} component={Cycle} />
+      <Route path={`${path}/returnBeforeHooks`} component={ReturnBeforeHooks} />
       <Redirect to={`${path}/context-render`} />
     </Switch>
   )
