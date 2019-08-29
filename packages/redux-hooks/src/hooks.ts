@@ -1,11 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Action, ActionCreatorsMapObject, AnyAction, bindActionCreators, Dispatch, Store } from 'redux';
-export const ReduxStoreContext = createContext<Store>({
-  dispatch(){ throw new Error("<ReduxStoreContext.Provider> is required") },
-  getState(){ throw new Error("<ReduxStoreContext.Provider> is required") },
-  replaceReducer(){ throw new Error("<ReduxStoreContext.Provider> is required") },
-  subscribe(){ throw new Error("<ReduxStoreContext.Provider> is required") }
-});
+export const ReduxStoreContext = createContext<Store>(null as any);
 export function useMapState<T, S = any>(
   mapState: (state: S) => T,
   isEquals?: (a: T, b: T) => boolean,
